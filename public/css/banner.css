@@ -1,0 +1,640 @@
+/* ==========================================================================
+   CookieShield Banner Styles — Dark Futuristic Theme
+   Mobile-first, BEM naming, CSS custom properties for theming.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* --------------------------------------------------------------------------
+   Custom properties — dark-first defaults, overridden by inline PHP styles
+   -------------------------------------------------------------------------- */
+.cookieshield-banner {
+  --cs-bg: #0c0c14;
+  --cs-text: #dde0f0;
+  --cs-primary: #5b8df6;
+  --cs-primary-text: #ffffff;
+  --cs-border: rgba(255, 255, 255, 0.09);
+  --cs-btn-border: rgba(255, 255, 255, 0.22);
+  --cs-muted: rgba(221, 224, 240, 0.45);
+  --cs-radius: 16px;
+  --cs-shadow: 0 12px 48px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(91, 141, 246, 0.14);
+  --cs-z: 99999;
+  --cs-font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --cs-glass: rgba(14, 14, 24, 0.96);
+  --cs-glow: rgba(91, 141, 246, 0.3);
+  --cs-header-bg: rgba(255, 255, 255, 0.03);
+  --cs-tab-active: var(--cs-primary);
+  --cs-cat-bg: rgba(255, 255, 255, 0.04);
+}
+
+/* --------------------------------------------------------------------------
+   Animations
+   -------------------------------------------------------------------------- */
+@keyframes cs-slide-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cs-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes cs-scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes cs-pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 var(--cs-glow), 0 4px 20px rgba(0,0,0,.4); }
+  50%       { box-shadow: 0 0 0 10px transparent, 0 4px 20px rgba(0,0,0,.4); }
+}
+
+@keyframes cs-spin-in {
+  from { transform: rotate(-15deg) scale(0.8); opacity: 0; }
+  to   { transform: rotate(0deg) scale(1); opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   Banner wrapper — full-viewport overlay (all positions)
+   -------------------------------------------------------------------------- */
+.cookieshield-banner {
+  position: fixed;
+  inset: 0;
+  z-index: var(--cs-z);
+  display: flex;
+  font-family: var(--cs-font);
+  font-size: 14px;
+  line-height: 1.55;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.cookieshield-banner[hidden] { display: none; }
+
+.cookieshield-banner--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Overlay backdrop */
+.cookieshield-banner__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 4, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: cs-fade-in 0.15s ease;
+}
+
+/* --------------------------------------------------------------------------
+   Dialog panel — the actual visible box
+   -------------------------------------------------------------------------- */
+.cookieshield-banner__dialog {
+  position: relative;
+  z-index: 1;
+  background: var(--cs-bg);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  color: var(--cs-text);
+  border: 1px solid var(--cs-border);
+  box-shadow: var(--cs-shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Position modifiers — control where the dialog sits
+   -------------------------------------------------------------------------- */
+
+/* Center Modal (default) */
+.cookieshield-banner--center-modal {
+  align-items: center;
+  justify-content: center;
+}
+
+.cookieshield-banner--center-modal .cookieshield-banner__dialog {
+  width: calc(100% - 32px);
+  max-width: 640px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: var(--cs-radius);
+  animation: cs-scale-in 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(91, 141, 246, 0.3) transparent;
+}
+
+.cookieshield-banner--center-modal .cookieshield-banner__dialog::-webkit-scrollbar { width: 4px; }
+.cookieshield-banner--center-modal .cookieshield-banner__dialog::-webkit-scrollbar-thumb {
+  background: rgba(91, 141, 246, 0.3);
+  border-radius: 2px;
+}
+
+/* Bottom Bar */
+.cookieshield-banner--bottom-bar {
+  align-items: flex-end;
+  justify-content: stretch;
+}
+
+.cookieshield-banner--bottom-bar .cookieshield-banner__overlay { display: none; }
+
+.cookieshield-banner--bottom-bar .cookieshield-banner__dialog {
+  width: 100%;
+  border-radius: var(--cs-radius) var(--cs-radius) 0 0;
+  border-bottom: none;
+  transform: translateY(100%);
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cookieshield-banner--bottom-bar.cookieshield-banner--visible .cookieshield-banner__dialog {
+  transform: translateY(0);
+}
+
+/* Bottom Left */
+.cookieshield-banner--bottom-left {
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 20px;
+}
+
+.cookieshield-banner--bottom-left .cookieshield-banner__overlay { display: none; }
+
+.cookieshield-banner--bottom-left .cookieshield-banner__dialog {
+  max-width: 420px;
+  width: 100%;
+  border-radius: var(--cs-radius);
+  animation: cs-slide-up 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Bottom Right */
+.cookieshield-banner--bottom-right {
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.cookieshield-banner--bottom-right .cookieshield-banner__overlay { display: none; }
+
+.cookieshield-banner--bottom-right .cookieshield-banner__dialog {
+  max-width: 420px;
+  width: 100%;
+  border-radius: var(--cs-radius);
+  animation: cs-slide-up 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Header — logo left, branding right
+   -------------------------------------------------------------------------- */
+.cookieshield-banner__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px;
+  background: var(--cs-header-bg);
+  border-bottom: 1px solid var(--cs-border);
+  flex-shrink: 0;
+}
+
+.cookieshield-banner__logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* WordPress custom logo */
+.cookieshield-banner__logo .custom-logo-link { display: flex; align-items: center; }
+.cookieshield-banner__logo .custom-logo { max-height: 36px; width: auto; display: block; }
+
+/* Fallback site name */
+.cookieshield-banner__site-name {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cs-text);
+}
+
+.cookieshield-banner__branding {
+  font-size: 11px;
+  color: var(--cs-muted);
+  text-align: right;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cookieshield-banner__branding strong {
+  font-weight: 600;
+}
+
+#cookieshield-banner .cookieshield-banner__branding-link {
+  color: var(--cs-primary);
+  text-decoration: none;
+  font-style: italic;
+  transition: opacity 0.12s;
+}
+
+#cookieshield-banner .cookieshield-banner__branding-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   Tabs
+   -------------------------------------------------------------------------- */
+.cookieshield-banner__tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--cs-border);
+  padding: 0 24px;
+  flex-shrink: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.cookieshield-banner__tabs::-webkit-scrollbar { display: none; }
+
+#cookieshield-banner .cookieshield-tab {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-block;
+  border-bottom: 2px solid transparent;
+  padding: 14px 16px 12px;
+  font-family: var(--cs-font);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cs-text);
+  opacity: 0.55;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-bottom: -1px;
+  transition: opacity 0.2s, border-color 0.2s, color 0.2s;
+  border-radius: 0;
+  background: transparent;
+}
+
+#cookieshield-banner .cookieshield-tab:hover { opacity: 0.85; }
+
+#cookieshield-banner .cookieshield-tab.is-active {
+  opacity: 1;
+  color: var(--cs-primary);
+  border-bottom-color: var(--cs-primary);
+  font-weight: 600;
+}
+
+#cookieshield-banner .cookieshield-tab:focus-visible {
+  outline: 2px solid var(--cs-primary);
+  outline-offset: -2px;
+}
+
+/* --------------------------------------------------------------------------
+   Tab panels
+   -------------------------------------------------------------------------- */
+.cookieshield-banner__panel {
+  display: none;
+  padding: 22px 24px 0;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cookieshield-banner__panel.is-active { display: flex; }
+
+.cookieshield-panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   Banner text
+   -------------------------------------------------------------------------- */
+.cookieshield-banner__title {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--cs-text);
+  letter-spacing: -0.01em;
+}
+
+.cookieshield-banner__description {
+  font-size: 13px;
+  margin: 0;
+  color: var(--cs-text);
+  opacity: 0.72;
+  line-height: 1.6;
+}
+
+.cookieshield-privacy-link {
+  font-size: 12px;
+  color: var(--cs-primary);
+  text-decoration: none;
+  opacity: 0.85;
+  border-bottom: 1px solid transparent;
+  transition: opacity 0.2s, border-color 0.2s;
+  align-self: flex-start;
+}
+
+.cookieshield-privacy-link:hover {
+  opacity: 1;
+  border-bottom-color: var(--cs-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Category grid — 4 columns like Cookiebot
+   -------------------------------------------------------------------------- */
+.cookieshield-cats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--cs-border);
+  border: 1px solid var(--cs-border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.cookieshield-cat-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 10px;
+  background: var(--cs-cat-bg);
+  text-align: center;
+  transition: background 0.2s;
+}
+
+.cookieshield-cat-cell:hover { background: rgba(255, 255, 255, 0.06); }
+
+.cookieshield-cat-cell__label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cs-text);
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+}
+
+/* --------------------------------------------------------------------------
+   Toggle switch
+   -------------------------------------------------------------------------- */
+.cookieshield-toggle {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.cookieshield-toggle__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.cookieshield-toggle__track {
+  display: flex;
+  align-items: center;
+  width: 42px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--cs-border);
+  border-radius: 12px;
+  transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
+  padding: 2px;
+}
+
+.cookieshield-toggle__input:checked + .cookieshield-toggle__track {
+  background: var(--cs-primary);
+  border-color: var(--cs-primary);
+  box-shadow: 0 0 10px var(--cs-glow);
+}
+
+.cookieshield-toggle__thumb {
+  width: 18px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.cookieshield-toggle__input:checked + .cookieshield-toggle__track .cookieshield-toggle__thumb {
+  transform: translateX(18px);
+  background: #ffffff;
+}
+
+.cookieshield-toggle__input:focus-visible + .cookieshield-toggle__track {
+  outline: 2px solid var(--cs-primary);
+  outline-offset: 2px;
+}
+
+/* Always-on toggle (Necessary) */
+.cookieshield-toggle--always-on { cursor: default; }
+
+.cookieshield-toggle--always-on .cookieshield-toggle__track {
+  background: var(--cs-primary);
+  border-color: var(--cs-primary);
+  box-shadow: 0 0 10px var(--cs-glow);
+  opacity: 0.75;
+}
+
+.cookieshield-toggle--always-on .cookieshield-toggle__thumb {
+  transform: translateX(18px);
+  background: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   Footer — three buttons
+   -------------------------------------------------------------------------- */
+.cookieshield-banner__footer {
+  display: flex;
+  gap: 10px;
+  padding: 20px 24px 24px;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+#cookieshield-banner .cookieshield-btn {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 20px;
+  border-radius: calc(var(--cs-radius) - 6px);
+  font-family: var(--cs-font);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.12s, transform 0.1s, box-shadow 0.12s, background 0.12s;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  flex: 1;
+  text-align: center;
+  border: 1px solid transparent;
+}
+
+#cookieshield-banner .cookieshield-btn:focus-visible {
+  outline: 2px solid var(--cs-primary);
+  outline-offset: 2px;
+}
+
+#cookieshield-banner .cookieshield-btn:active { transform: scale(0.97); }
+
+/* Primary — gradient */
+#cookieshield-banner .cookieshield-btn--primary {
+  background: linear-gradient(135deg, var(--cs-primary) 0%, #7c6ff7 100%);
+  color: var(--cs-primary-text);
+  box-shadow: 0 2px 16px var(--cs-glow);
+  flex: 1.4;
+}
+
+#cookieshield-banner .cookieshield-btn--primary:hover {
+  opacity: 0.92;
+  box-shadow: 0 4px 22px var(--cs-glow);
+  transform: translateY(-1px);
+}
+
+/* Secondary — outlined */
+#cookieshield-banner .cookieshield-btn--secondary {
+  background: transparent;
+  color: var(--cs-text);
+  border-color: var(--cs-btn-border);
+  opacity: 0.85;
+}
+
+#cookieshield-banner .cookieshield-btn--secondary:hover {
+  opacity: 1;
+  background: rgba(128, 128, 128, 0.08);
+  border-color: var(--cs-btn-border);
+}
+
+/* Ghost — text only, with border */
+#cookieshield-banner .cookieshield-btn--ghost {
+  background: transparent;
+  color: var(--cs-text);
+  border-color: var(--cs-btn-border);
+  opacity: 0.65;
+  flex: 0.8;
+}
+
+#cookieshield-banner .cookieshield-btn--ghost:hover {
+  opacity: 0.9;
+  border-color: var(--cs-btn-border);
+  background: rgba(128, 128, 128, 0.06);
+}
+
+/* --------------------------------------------------------------------------
+   Reopen floating button
+   -------------------------------------------------------------------------- */
+.cookieshield-reopen {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: var(--cs-z);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cs-primary, #5b8df6) 0%, #7c6ff7 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: cs-pulse-glow 3s ease-in-out infinite, cs-spin-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s;
+}
+
+.cookieshield-reopen[hidden] { display: none; }
+
+.cookieshield-reopen:hover {
+  transform: scale(1.1) rotate(8deg);
+  box-shadow: 0 6px 28px rgba(0,0,0,.5), 0 0 28px var(--cs-glow, rgba(91,141,246,.3));
+}
+
+.cookieshield-reopen:focus-visible {
+  outline: 2px solid var(--cs-primary, #5b8df6);
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile — stack category grid to 2x2, full-width dialogs
+   -------------------------------------------------------------------------- */
+@media (max-width: 600px) {
+  .cookieshield-cats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cookieshield-banner--center-modal {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .cookieshield-banner--center-modal .cookieshield-banner__dialog {
+    width: 100%;
+    max-width: 100%;
+    border-radius: var(--cs-radius) var(--cs-radius) 0 0;
+    max-height: 92vh;
+    animation: cs-slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cookieshield-banner--bottom-left,
+  .cookieshield-banner--bottom-right {
+    align-items: flex-end;
+    justify-content: stretch;
+    padding: 0;
+  }
+
+  .cookieshield-banner--bottom-left .cookieshield-banner__dialog,
+  .cookieshield-banner--bottom-right .cookieshield-banner__dialog {
+    max-width: 100%;
+    border-radius: var(--cs-radius) var(--cs-radius) 0 0;
+  }
+
+  .cookieshield-banner__footer {
+    flex-wrap: wrap;
+  }
+
+  .cookieshield-btn { flex: 1 1 auto; min-width: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   Light mode override — data-cs-dark="false"
+   -------------------------------------------------------------------------- */
+.cookieshield-banner[data-cs-dark="false"] {
+  --cs-text: #1a1a2e;
+  --cs-border: rgba(0, 0, 0, 0.08);
+  --cs-btn-border: rgba(0, 0, 0, 0.18);
+  --cs-muted: rgba(26, 26, 46, 0.45);
+  --cs-header-bg: rgba(0, 0, 0, 0.02);
+  --cs-cat-bg: rgba(0, 0, 0, 0.02);
+  --cs-shadow: 0 12px 48px rgba(0,0,0,0.18), 0 0 0 1px rgba(91,141,246,.1);
+}
+
+/* --------------------------------------------------------------------------
+   Screen reader only utility
+   -------------------------------------------------------------------------- */
+.screen-reader-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
