@@ -618,7 +618,7 @@
   --cs-text: #1a1a2e;
   --cs-border: rgba(0, 0, 0, 0.08);
   --cs-btn-border: rgba(0, 0, 0, 0.18);
-  --cs-muted: rgba(26, 26, 46, 0.65);
+  --cs-muted: rgba(26, 26, 46, 0.85);
   --cs-header-bg: rgba(0, 0, 0, 0.02);
   --cs-cat-bg: rgba(0, 0, 0, 0.02);
   --cs-shadow: 0 12px 48px rgba(0,0,0,0.18), 0 0 0 1px rgba(91,141,246,.1);
