@@ -166,12 +166,20 @@ class CookieShield_Plugin {
 
         <?php
         // Build inline CSS vars — inline style wins over any external stylesheet.
+        // Derive --cs-muted from the actual text color so it's always readable.
+        $text_hex = ltrim( $settings['color_text'], '#' );
+        $r        = hexdec( substr( $text_hex, 0, 2 ) );
+        $g        = hexdec( substr( $text_hex, 2, 2 ) );
+        $b        = hexdec( substr( $text_hex, 4, 2 ) );
+        $cs_muted = "rgba({$r},{$g},{$b},0.7)";
+
         $inline_vars = sprintf(
-            '--cs-bg:%s;--cs-text:%s;--cs-primary:%s;--cs-primary-text:%s;',
+            '--cs-bg:%s;--cs-text:%s;--cs-primary:%s;--cs-primary-text:%s;--cs-muted:%s;',
             esc_attr( $settings['color_bg'] ),
             esc_attr( $settings['color_text'] ),
             esc_attr( $settings['color_primary'] ),
-            esc_attr( $settings['color_primary_text'] )
+            esc_attr( $settings['color_primary_text'] ),
+            $cs_muted
         );
         ?>
         <!-- CookieShield Banner -->
