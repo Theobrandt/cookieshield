@@ -25,9 +25,9 @@ define( 'COOKIESHIELD_DIR', plugin_dir_path( __FILE__ ) );
 define( 'COOKIESHIELD_URL', plugin_dir_url( __FILE__ ) );
 
 // Automatic updates via GitHub.
-if ( file_exists( COOKIESHIELD_DIR . 'vendor/plugin-update-checker/load-v5p5.php' ) ) {
-    require_once COOKIESHIELD_DIR . 'vendor/plugin-update-checker/load-v5p5.php';
-    $cookieshield_updater = YahnisElsts\PluginUpdateChecker\v5p5\PucFactory::buildUpdateChecker(
+if ( file_exists( COOKIESHIELD_DIR . 'vendor/plugin-update-checker/load-v5p6.php' ) ) {
+    require_once COOKIESHIELD_DIR . 'vendor/plugin-update-checker/load-v5p6.php';
+    $cookieshield_updater = YahnisElsts\PluginUpdateChecker\v5p6\PucFactory::buildUpdateChecker(
         'https://github.com/Theobrandt/cookieshield/',
         __FILE__,
         'cookieshield'
