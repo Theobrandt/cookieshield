@@ -204,6 +204,7 @@
 
 /* WordPress custom logo */
 .cookieshield-banner__logo .custom-logo-link { display: flex; align-items: center; }
+.cookieshield-banner__logo .custom-logo-link:focus:not(:focus-visible) { outline: none; }
 .cookieshield-banner__logo .custom-logo { max-height: 36px; width: auto; display: block; }
 
 /* Fallback site name */
@@ -493,7 +494,7 @@
 
 /* Primary — gradient */
 #cookieshield-banner .cookieshield-btn--primary {
-  background: linear-gradient(135deg, var(--cs-primary) 0%, #7c6ff7 100%);
+  background: var(--cs-primary);
   color: var(--cs-primary-text);
   box-shadow: 0 2px 16px var(--cs-glow);
   flex: 1.4;
