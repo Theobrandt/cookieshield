@@ -496,13 +496,13 @@
 #cookieshield-banner .cookieshield-btn--primary {
   background: var(--cs-primary);
   color: var(--cs-primary-text);
-  box-shadow: 0 2px 16px var(--cs-glow);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
   flex: 1.4;
 }
 
 #cookieshield-banner .cookieshield-btn--primary:hover {
   opacity: 0.92;
-  box-shadow: 0 4px 22px var(--cs-glow);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
   transform: translateY(-1px);
 }
 
@@ -608,6 +608,16 @@
   }
 
   .cookieshield-btn { flex: 1 1 auto; min-width: 0; }
+
+  .cookieshield-reopen {
+    width: 32px;
+    height: 32px;
+    opacity: 0.7;
+  }
+
+  .cookieshield-reopen:hover {
+    opacity: 1;
+  }
 }
 
 /* --------------------------------------------------------------------------
