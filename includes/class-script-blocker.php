@@ -50,6 +50,11 @@ class CookieShield_Script_Blocker {
             return;
         }
 
+        // Skip buffering if the user has already consented to all categories.
+        if ( CookieShield_Consent_Manager::consent_exists() ) {
+            return;
+        }
+
         ob_start( [ $this, 'rewrite_inline_scripts' ] );
     }
 

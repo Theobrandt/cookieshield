@@ -204,7 +204,7 @@ class CookieShield_Plugin {
                     <?php if ( $powered_by ) : ?>
                     <div class="cookieshield-banner__branding">
                         Powered by
-                        <strong><a href="https://jtmedia.se" target="_blank" rel="noopener noreferrer" class="cookieshield-banner__branding-link"><em><?php echo esc_html( $powered_by ); ?></em></a></strong>
+                        <strong><a href="https://jtmedia.se" target="_blank" rel="noopener noreferrer nofollow" class="cookieshield-banner__branding-link"><em><?php echo esc_html( $powered_by ); ?></em></a></strong>
                     </div>
                     <?php endif; ?>
                 </div>
@@ -267,7 +267,7 @@ class CookieShield_Plugin {
                 <div class="cookieshield-banner__panel" role="tabpanel" aria-labelledby="cs-tab-info" data-cspanel="info" hidden>
                     <div class="cookieshield-panel-content">
                         <p class="cookieshield-banner__description"></p>
-                        <a class="cookieshield-privacy-link" href="" target="_blank" rel="noopener noreferrer" hidden>
+                        <a class="cookieshield-privacy-link" href="#" target="_blank" rel="noopener noreferrer nofollow" hidden>
                             <?php esc_html_e( 'Read our Privacy Policy', 'cookieshield' ); ?>
                         </a>
                     </div>

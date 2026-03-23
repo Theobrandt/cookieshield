@@ -3,7 +3,7 @@
  * Plugin Name:       CookieShield
  * Plugin URI:        https://jtmedia.se
  * Description:       GDPR/ePrivacy-compliant cookie consent management for WordPress.
- * Version:           1.1.2
+ * Version:           1.2.0
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            JT Media AB
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'COOKIESHIELD_VERSION', '1.1.2' );
+define( 'COOKIESHIELD_VERSION', '1.2.0' );
 define( 'COOKIESHIELD_DIR', plugin_dir_path( __FILE__ ) );
 define( 'COOKIESHIELD_URL', plugin_dir_url( __FILE__ ) );
 
@@ -33,7 +33,6 @@ if ( file_exists( COOKIESHIELD_DIR . 'vendor/plugin-update-checker/load-v5p6.php
         'cookieshield'
     );
     $cookieshield_updater->setBranch( 'main' );
-    $cookieshield_updater->setAuthentication( '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' );
 }
 
 require_once COOKIESHIELD_DIR . 'includes/class-consent-manager.php';
