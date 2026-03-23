@@ -557,7 +557,7 @@
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s;
 }
 
-.cookieshield-reopen[hidden] { display: none; }
+.cookieshield-reopen[hidden] { display: none !important; }
 
 .cookieshield-reopen:hover {
   transform: scale(1.1) rotate(8deg);
